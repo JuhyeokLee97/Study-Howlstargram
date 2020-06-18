@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             googleLogin()
         }
         /*
-        GoogleSignInOptions 가 뭔지 알아보자
+        GoogleSignInOptions 가 뭔지 알아보자...https://galid1.tistory.com/109
         Builder 개념 및 사용 상황에 대해서 알아보자
          */
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
