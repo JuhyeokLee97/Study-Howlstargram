@@ -1,0 +1,79 @@
+# 1. Firebase에서 사용자 관리하기
+## 1-1 사용자 생성하기
+방법 1). createUsersWithEmailAndPassword 메서드를 호출한다.
+방법 2). Google로그인 또는 Facebook 로그인과 같은 제휴 ID 공급업체를 이용해 사용자의 최초 로그인을 처리하는 방법이 있다.
+
+## 1-2 현재 로그인한 사용자 가져오기
+방법). getCurrentUser 메서드를 호출한다.
+(참고, 로그인한 사용자가 없으면 null을 반환한다.)
+
+    val user = FirebaseAuth.getInstance().currentUser
+    if (user != null) {
+        // User is signed in
+    } else {
+        // No user is signed in
+    }
+    
+## 1-3 사용자 프로필 가져오기
+방법). FirebaseUser 인스턴스의 접근자 메서드를 사용한다.
+
+    val user = FirebaseAuth.getInstance().currentUser
+    user?.let {
+        // Name, email address, and profile photo Url
+        val name = user.displayName
+        val email = user.email
+        val photoUrl = user.photoUrl
+    
+        // Check if user's email is verified
+        val emailVerified = user.isEmailVerified
+    
+        // The user's ID, unique to the Firebase project. Do NOT use this value to
+        // authenticate with your backend server, if you have one. Use
+        // FirebaseUser.getToken() instead.
+        val uid = user.uid
+    }
+## 1-4 제공업체의 사용자 프로필 정보 가져오기
+사용자에게 연결된 로그인 제공업체로부터 프리필 정보를 가져오려면 providerData 메서드를 사용한다.
+
+    val user = FirebaseAuth.getInstance().currentUser
+    user?.let {
+        for (profile in it.providerData) {
+            // Id of the provider (ex: google.com)
+            val providerId = profile.providerId
+    
+            // UID specific to the provider
+            val uid = profile.uid
+    
+            // Name, email address, and profile photo Url
+            val name = profile.displayName
+            val email = profile.email
+            val photoUrl = profile.photoUrl
+        }
+    }
+## 1-5 사용자가 프로필 업데이트하기
+사용자의 표시 이름 및 프로필 사진 URL 등의 기본 프로필 정보를 업데이트할 때는 updateProfile 메서드를 사용한다.
+
+    val user = FirebaseAuth.getInstance().currentUser
+    
+    val profileUpdates = UserProfileChangeRequest.Builder()
+            .setDisplayName("Jane Q. User")
+            .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
+            .build()
+    
+    user?.updateProfile(profileUpdates)
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "User profile updated.")
+                }
+            }
+## 1-6 사용자 이메일 주소 설정하기
+updateEmail 메서드로 사용자의 이메일 주소를 설정할 수 있다.
+
+    val user = FirebaseAuth.getInstance().currentUser
+    
+    user?.updateEmail("user@example.com")
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "User email address updated.")
+                }
+            }
