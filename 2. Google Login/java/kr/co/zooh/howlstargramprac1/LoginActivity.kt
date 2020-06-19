@@ -34,10 +34,6 @@ class LoginActivity : AppCompatActivity() {
             // First Step
             googleLogin()
         }
-        /*
-        GoogleSignInOptions 가 뭔지 알아보자...https://galid1.tistory.com/109
-        Builder 개념 및 사용 상황에 대해서 알아보자
-         */
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail() // Gmail 받아오기
@@ -49,15 +45,8 @@ class LoginActivity : AppCompatActivity() {
 
     fun googleLogin() {  // 1st Step
         var signInIntent = googleSignInClient?.signInIntent
-        /*
-        startActivityForResult 가 무엇인지 알아보자.
-         */
         startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
     }
-
-    /*
-    onActivityResult가 원래 어떤 함수인지 알아보자.
-     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_LOGIN_CODE) {
@@ -78,9 +67,6 @@ class LoginActivity : AppCompatActivity() {
             GoogleAuthProvider.getCredential(account?.idToken, null)   // account에 있는 Token값을 받아온다.
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener { task ->
-                /*
-                task.isSuccessful >> 의미하는 값이 무엇일까??? Firebase에서 찾아보자!
-                 */
                 if (task.isSuccessful) {
                     // 아이디가 성공적으로 만들어졌을 때
                     moveMainPage(task.result?.user);
@@ -104,9 +90,6 @@ class LoginActivity : AppCompatActivity() {
             password_edittext.text.toString()
         )
             ?.addOnCompleteListener { task ->
-                /*
-                task.isSuccessful >> 의미하는 값이 무엇일까??? Firebase에서 찾아보자!
-                 */
                 if (task.isSuccessful) {
                     // 아이디가 성공적으로 만들어졌을 때
                     moveMainPage(task.result?.user);
@@ -139,10 +122,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun moveMainPage(user: FirebaseUser?) {
-        /*
-        startActivity가 뭐야?
-        MainActivity::class.java가 의미하는 것을 찾아보자
-         */
         if (user != null)
             startActivity(Intent(this, MainActivity::class.java))
     }
