@@ -67,7 +67,7 @@ class AddPhotoActivity : AppCompatActivity() {
         // Promise method
         storageRef?.putFile(photoUri!!)?.continueWithTask { task : Task<UploadTask.TaskSnapshot>->
             return@continueWithTask storageRef.downloadUrl
-        }?.addOnCompleteListener { uri ->
+        }?.addOnSuccessListener { uri ->
             var contentDTO = ContentDTO()
 
             // Insert downloadUrl of image
