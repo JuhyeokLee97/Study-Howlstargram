@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="50">
     <ImageView
         android:id="@+id/commentview_imageview_profile"
         android:layout_margin="7.5dp"
