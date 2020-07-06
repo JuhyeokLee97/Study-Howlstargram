@@ -33,7 +33,7 @@ class CommentActivity : AppCompatActivity() {
             comment.comment = comment_edit_message.text.toString()
             comment.timestamp = System.currentTimeMillis()
 
-            FirebaseFirestore.getInstance().collection("images").document(contentUid!!).collection("comment").document().set(comment)
+            FirebaseFirestore.getInstance().collection("images").document(contentUid!!).collection("comments").document().set(comment)
 
             comment_edit_message
         }
@@ -44,7 +44,7 @@ class CommentActivity : AppCompatActivity() {
             FirebaseFirestore.getInstance()
                 .collection("images")
                 .document(contentUid!!)
-                .collection("comment")
+                .collection("comments")
                 .orderBy("timestamp")
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     comments.clear()
